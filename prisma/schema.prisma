@@ -12,3 +12,55 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Users {
+  id  Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email String @unique
+  name String
+  listings Listings[]
+  sentMessages Messages[] @relation("sent_messages")
+  receivedMessages Messages[] @relation("received_messages")
+}
+
+model Listings {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  user_id Int
+  user Users @relation(fields: [user_id], references: [id])
+  cost Decimal @db.Decimal(10, 2)
+  title String
+  description String @db.Text
+  images Listing_Images[]
+  categories Categories[]
+  city String
+  state String
+  zip_code String
+  country String
+}
+
+model Listing_Images {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  url String
+  listing_id Int
+  listing Listings @relation(fields: [listing_id], references: [id])
+}
+
+model Categories {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  name String @unique
+  description String?
+  listings Listings[]
+}
+
+model Messages {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  user_id Int
+  user Users @relation("sent_messages", fields: [user_id], references: [id])
+  recipient_id Int
+  recipient Users @relation("received_messages", fields: [recipient_id], references: [id])
+  content String @db.Text
+}
