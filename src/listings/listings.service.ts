@@ -1,17 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from 'generated/prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
-
-const prisma = new PrismaClient({ adapter });
-
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class ListingsService {
+  constructor(private prisma: PrismaService) {}
+
   getListings(): any {
-    return prisma.listings.findMany();
+    return this.prisma.listings.findMany();
   }
 }
