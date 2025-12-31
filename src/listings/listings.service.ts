@@ -48,4 +48,22 @@ export class ListingsService {
       },
     });
   }
+
+  getListingsByUser(userId: number): any {
+    return this.prisma.listings.findMany({
+      where: {
+        user_id: userId,
+      },
+      include: {
+        categories: true,
+        images: {
+          select: {
+            id: true,
+            created_at: true,
+            url: true,
+          },
+        },
+      },
+    });
+  }
 }
