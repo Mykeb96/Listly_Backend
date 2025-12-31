@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, ParseIntPipe } from '@nestjs/common';
 import { ListingsService } from './listings.service'
 
 @Controller('listings')
@@ -8,14 +8,14 @@ export class ListingsController {
     @Get()
     getListings(
         @Query('category') category?: string,
-        @Query('user') user?: string
+        @Query('user', new ParseIntPipe({ optional: true })) user?: number,
+        @Query('id', new ParseIntPipe({ optional: true })) id?: number
     ): any {
+        if (id) {
+            return this.listingsService.getListingsById(id);
+        }
         if (user) {
-            const userId = parseInt(user, 10);
-            if (isNaN(userId)) {
-                throw new Error('Invalid user ID');
-            }
-            return this.listingsService.getListingsByUser(userId);
+            return this.listingsService.getListingsByUser(user);
         }
         if (category) {
             return this.listingsService.getListingsByCategory(category);

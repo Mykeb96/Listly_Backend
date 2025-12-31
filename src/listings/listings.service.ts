@@ -66,4 +66,22 @@ export class ListingsService {
       },
     });
   }
+
+  getListingsById(id: number): any {
+    return this.prisma.listings.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            categories: true,
+            images: {
+                select: {
+                    id: true,
+                    created_at: true,
+                    url: true
+                }
+            }
+        }
+    })
+  }
 }
