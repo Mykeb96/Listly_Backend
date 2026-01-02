@@ -7,6 +7,7 @@ import { PrismaService } from './prisma.service';
 import { ListingsModule } from './listings/listings.module';
 import { CategoriesModule } from './categories/categories.module';
 import { UsersModule } from './users/users.module';
+import { MessagesModule } from './messages/messages.module';
 
 
 @Global()
@@ -18,8 +19,8 @@ import { UsersModule } from './users/users.module';
     }),
     ListingsModule,
     CategoriesModule,
-    UsersModule
-
+    UsersModule,
+    MessagesModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
