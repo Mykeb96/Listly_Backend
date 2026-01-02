@@ -6,6 +6,7 @@ import { PrismaService } from './prisma.service';
 
 import { ListingsModule } from './listings/listings.module';
 import { CategoriesModule } from './categories/categories.module';
+import { UsersModule } from './users/users.module';
 
 
 @Global()
@@ -16,7 +17,8 @@ import { CategoriesModule } from './categories/categories.module';
       envFilePath: '.env',
     }),
     ListingsModule,
-    CategoriesModule
+    CategoriesModule,
+    UsersModule
 
   ],
   controllers: [AppController],
