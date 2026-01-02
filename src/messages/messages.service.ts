@@ -81,6 +81,12 @@ export class MessagesService {
             }
         })
 
+        if (messages.length === 0) {
+            throw new NotFoundException('There are no messages between these users')
+        }
+
         return messages;
     }
+
+    
 }

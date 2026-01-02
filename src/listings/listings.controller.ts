@@ -1,5 +1,7 @@
-import { Controller, Get, Query, ParseIntPipe, BadRequestException } from '@nestjs/common';
-import { ListingsService } from './listings.service'
+import { Controller, Get, Post, Put, Body, Query, Param, ParseIntPipe, BadRequestException, Delete } from '@nestjs/common';
+import { ListingsService } from './listings.service';
+import { CreateListingDto } from './dto/create-listing.dto';
+import { UpdateListingDto } from './dto/update-listing.dto';
 
 @Controller('listings')
 export class ListingsController {
@@ -24,5 +26,23 @@ export class ListingsController {
             return this.listingsService.getListingsByCategory(category);
         }
         return this.listingsService.getListings();
+    }
+
+    @Post()
+    createListing(@Body() createListingDto: CreateListingDto) {
+        return this.listingsService.createListing(createListingDto);
+    }
+
+    @Put(':id')
+    updateListing(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateListingDto: UpdateListingDto
+    ) {
+        return this.listingsService.updateListing(id, updateListingDto);
+    }
+
+    @Delete(':id')
+    deleteListing(@Param('id', ParseIntPipe) id: number) {
+        return this.listingsService.deleteListing(id);
     }
 }
