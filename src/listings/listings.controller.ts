@@ -12,7 +12,7 @@ export class ListingsController {
         @Query('category') category?: string,
         @Query('user', new ParseIntPipe({ optional: true })) user?: number,
         @Query('id', new ParseIntPipe({ optional: true })) id?: number
-    ): any {
+    ) {
         if (id) {
             return this.listingsService.getListingsById(id);
         }
@@ -29,7 +29,9 @@ export class ListingsController {
     }
 
     @Post()
-    createListing(@Body() createListingDto: CreateListingDto) {
+    createListing(
+        @Body() createListingDto: CreateListingDto
+    ) {
         return this.listingsService.createListing(createListingDto);
     }
 
@@ -42,7 +44,9 @@ export class ListingsController {
     }
 
     @Delete(':id')
-    deleteListing(@Param('id', ParseIntPipe) id: number) {
+    deleteListing(
+        @Param('id', ParseIntPipe) id: number
+    ) {
         return this.listingsService.deleteListing(id);
     }
 }

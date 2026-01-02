@@ -146,7 +146,7 @@ export class MessagesService {
         content: string
     }): Promise<{
         message: string,
-        createdMessage: any
+        createdMessage: MessageWithRelations
     }> {
         const user = await this.prisma.users.findUnique({
             where: {
@@ -192,22 +192,7 @@ export class MessagesService {
 
     async deleteMessage(id: number): Promise<{
         message: string,
-        deletedMessage: {
-            id: number,
-            content: string,
-            user: {
-                id: number,
-                first_name: string,
-                last_name: string,
-                email: string
-            },
-            recipient: {
-                id: number,
-                first_name: string,
-                last_name: string,
-                email: string
-            }
-        }
+        deletedMessage: MessageWithRelations
     }>{
         const message = await this.prisma.messages.findUnique({
             where: {
@@ -265,6 +250,7 @@ export class MessagesService {
             message: `Message successfully deleted`,
             deletedMessage: {
                 id: message.id,
+                created_at: message.created_at,
                 content: message.content,
                 user: message.user,
                 recipient: message.recipient

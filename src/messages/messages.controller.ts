@@ -33,7 +33,9 @@ export class MessagesController {
     }
 
     @Delete(':id')
-    deleteMessage(@Param('id', ParseIntPipe) id: number) {
+    deleteMessage(
+        @Param('id', ParseIntPipe) id: number
+    ) {
         return this.messagesService.deleteMessage(id)
     }
 }
