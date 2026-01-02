@@ -2,8 +2,11 @@ import { Module, Global } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { ListingsModule } from './listings/listings.module';
 import { PrismaService } from './prisma.service';
+
+import { ListingsModule } from './listings/listings.module';
+import { CategoriesModule } from './categories/categories.module';
+
 
 @Global()
 @Module({
@@ -13,6 +16,8 @@ import { PrismaService } from './prisma.service';
       envFilePath: '.env',
     }),
     ListingsModule,
+    CategoriesModule
+
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
